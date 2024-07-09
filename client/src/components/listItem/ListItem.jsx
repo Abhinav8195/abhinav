@@ -16,7 +16,7 @@ export default function ListItem({ index, item }) {
   useEffect(() => {
     const getMovie = async () => {
       try {
-        const res = await axios.get("https://abhinav-kappa.vercel.app/api/movies/find/" + item, {
+        const res = await axios.get("/movies/find/" + item, {
           headers: {
             token:
             "Bearer "+JSON.parse(localStorage.getItem("user")).accessToken,
@@ -38,7 +38,7 @@ export default function ListItem({ index, item }) {
     <div onClick={handleClick}>
     <div
       className="listItem"
-      style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
+      style={{ center: isHovered && index * 225 - 50 + index * 2.5 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -46,7 +46,7 @@ export default function ListItem({ index, item }) {
       {isHovered && (
         <>
           <video src={movie?.trailer} autoPlay={true} loop />
-          <div className="itemInfo">
+          <div className="itemInfo" style={{color:'white'}}>
             <div className="icons">
               <FaPlay className="icon" />
               <IoMdAdd className="icon" />
