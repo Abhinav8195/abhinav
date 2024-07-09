@@ -23,7 +23,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  
  
 }
 .listItem:hover {
@@ -71,4 +70,14 @@
 .listItem:hover .itemInfo .genre {
   font-size: 14px;
   color: lightgray;
+}
+@media (max-width: 768px) {
+  .listItem {
+    width: 150px;
+    height: 80px;
+  }
+  .listItem:hover {
+    width: 250px;
+    height: 200px;
+  }
 }
