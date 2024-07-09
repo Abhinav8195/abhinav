@@ -1,5 +1,5 @@
 .navbar {
-  width: 100vw; /* Ensure the navbar spans the full viewport width */
+  width: 100%;
   color: white;
   font-size: 14px;
   position: fixed;
@@ -74,7 +74,6 @@
   display: none;
   font-size: 24px;
   cursor: pointer;
-  margin-right: 20px;
 }
 
 @media (max-width: 768px) {
