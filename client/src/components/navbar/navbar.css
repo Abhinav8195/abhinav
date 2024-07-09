@@ -118,7 +118,7 @@
 }
 
 .side-menu .close-icon {
-  
+  align-self: flex-end;
   font-size: 24px;
   cursor: pointer;
   margin-bottom: 20px;
