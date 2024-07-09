@@ -1,65 +1,141 @@
-.list {
-  width: 100%;
-  margin-top: 10px;
-}
-.list .listTitle {
-  color: white;
-  font-size: 20px;
-  font-weight: 500;
-  margin-left: 50px;
-}
-.list .wrapper {
+.login {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 100%
+    ),
+    url("https://assets.nflxext.com/ffe/siteui/vlv3/0552717c-9d8c-47bd-9640-4f4efa2de663/537e2c5e-c750-4d4c-9f7a-e66fe93eb977/IN-en-20240701-POP_SIGNUP_TWO_WEEKS-perspective_WEB_b00eeb83-a7e8-4b5b-8ff7-86ed92c51caf_small.jpg");
+  background-size: cover;
   position: relative;
-}
-.list .wrapper .sliderArrow {
-  width: 50px;
-  height: 100%;
-  background-color: #161616;
-  color: white;
-  position: absolute;
-  z-index: 99;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  cursor: pointer;
-  opacity: 0.5;
-  transition: opacity 0.3s ease-in-out;
-}
-.list .wrapper .sliderArrow:hover {
-  opacity: 1;
-}
-.list .wrapper .sliderArrow.left {
-  left: 0;
-}
-.list .wrapper .sliderArrow.right {
-  right: 0;
-}
-.list .wrapper .container {
-  margin-left: 50px;
-  display: flex;
-  margin-top: 10px;
-  width: max-content;
-  transform: translateX(0px);
-  transition: transform 0.5s ease;
+
+  .top {
+    .wrapper {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .logo {
+        height: 30px;
+      }
+    }
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 20px;
+
+    form {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      box-sizing: border-box;
+
+      input {
+        height: 40px;
+        border-radius: 5px;
+        background-color: gray;
+        color: white;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        border: none;
+
+        &::placeholder {
+          color: lightgray;
+        }
+      }
+
+      button {
+        height: 40px;
+        border-radius: 5px;
+        background-color: red;
+        color: white;
+        border: none;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      span {
+        color: lightgray;
+        margin-top: 10px;
+        b {
+          color: white;
+        }
+      }
+
+      small {
+        margin-top: 10px;
+        font-size: 12px;
+        color: lightgray;
+        b {
+          color: white;
+        }
+      }
+    }
+  }
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
-  .list .listTitle {
-    font-size: 16px;
-    margin-left: 20px;
+  .login .top .wrapper {
+    padding: 10px;
   }
-  .list .wrapper .container {
-    margin-left: 20px;
+
+  .login .top .wrapper .logo {
+    height: 25px;
+  }
+
+  .login .container form {
+    padding: 15px;
+  }
+
+  .login .container form input {
+    height: 35px;
+  }
+
+  .login .container form button {
+    height: 35px;
+    font-size: 16px;
   }
 }
 
-
-@media (max-width: 430px) {
-  .list .listTitle {
-    font-size: 16px;
-    margin-left: 10px;
+@media (max-width: 480px) {
+  .login .top .wrapper {
+    padding: 5px;
   }
-  .list .wrapper .container {
-    margin-left: 10px;
+
+  .login .top .wrapper .logo {
+    height: 20px;
+  }
+
+  .login .container form {
+    padding: 10px;
+  }
+
+  .login .container form input {
+    height: 30px;
+  }
+
+  .login .container form button {
+    height: 30px;
+    font-size: 14px;
   }
 }
