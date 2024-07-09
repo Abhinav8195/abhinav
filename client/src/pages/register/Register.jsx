@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./register.css";
 
@@ -11,33 +11,19 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const usernameRef = useRef();
-
-  const handleStart = () => {
-    setEmail(emailRef.current.value);
-  };
-
   const handleFinish = async (e) => {
     e.preventDefault();
-    if (loading) return; // Prevent multiple submissions
+    if (loading) return; 
     setLoading(true);
-    setPassword(passwordRef.current.value);
-    setUsername(usernameRef.current.value);
 
     try {
-      const response = await axios.post("https://abhinav-kappa.vercel.app/api/auth/register", { email, username, password });
+      const response = await axios.post("/auth/register", { email, username, password });
       setLoading(false);
       navigate("/login");
     } catch (err) {
       setLoading(false);
       setError(err.response?.data?.message || "Something went wrong");
     }
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
   };
 
   return (
@@ -49,7 +35,9 @@ export default function Register() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
-          <button className="loginButton" onClick={handleLogin}>Sign In</button>
+          <button className="loginButton" onClick={() => navigate("/login")}>
+            Sign In
+          </button>
         </div>
       </div>
       <div className="container">
@@ -58,22 +46,14 @@ export default function Register() {
         <p>
           Ready to watch? Enter your email to create or restart your membership.
         </p>
-        {!email ? (
-          <div className="input">
-            <input type="email" placeholder="email address" ref={emailRef} />
-            <button className="registerButton" onClick={handleStart}>
-              Get Started
-            </button>
-          </div>
-        ) : (
-          <form className="input" onSubmit={handleFinish}>
-            <input type="text" placeholder="username" ref={usernameRef} />
-            <input type="password" placeholder="password" ref={passwordRef} />
-            <button className="registerButton" type="submit" disabled={loading}>
-              {loading ? "Loading..." : "Start"}
-            </button>
-          </form>
-        )}
+        <form className="input" onSubmit={handleFinish}>
+          <input type="email" placeholder="email address" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <button className="registerButton" type="submit" disabled={loading}>
+            {loading ? "Loading..." : "Start"}
+          </button>
+        </form>
         {error && <div className="error">{error}</div>}
       </div>
     </div>
