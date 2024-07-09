@@ -1,8 +1,7 @@
 import { IoMdArrowDropdown } from "react-icons/io";
-
 import { IoIosNotifications } from "react-icons/io";
 import { FaSearch } from "react-icons/fa";
-
+import { IoMenuOutline } from "react-icons/io5";
 import { useContext, useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
@@ -11,19 +10,26 @@ import { logout } from "../../authContext/AuthActions";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { dispatch } = useContext(AuthContext);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
   };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <div className={isScrolled ? "navbar scrolled" : "navbar"}>
       <div className="container">
         <div className="left">
+          <IoMenuOutline className="menu-icon" onClick={toggleMenu} />
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-            alt=""
+            alt="Netflix"
           />
           <Link to="/" className="link">
             <span>Homepage</span>
@@ -54,6 +60,21 @@ const Navbar = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className={`side-menu ${isMenuOpen ? "open" : ""}`}>
+        <IoMenuOutline className="close-icon" onClick={toggleMenu} />
+        <Link to="/" className="link" onClick={toggleMenu}>
+          <span>Homepage</span>
+        </Link>
+        <Link to="/series" className="link" onClick={toggleMenu}>
+          <span>Series</span>
+        </Link>
+        <Link to="/movies" className="link" onClick={toggleMenu}>
+          <span>Movies</span>
+        </Link>
+        <span>New and Popular</span>
+        <span>My List</span>
+        <span onClick={() => dispatch(logout())}>Logout</span>
       </div>
     </div>
   );
