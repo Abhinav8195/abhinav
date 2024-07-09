@@ -5,7 +5,6 @@ import List from "../../components/list/List";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
 const Home = ({ type }) => {
   const [lists, setLists] = useState([]);
   const [genre, setGenre] = useState(null);
@@ -13,20 +12,24 @@ const Home = ({ type }) => {
   useEffect(() => {
     const getRandomLists = async () => {
       try {
-        console.log("Fetching lists with type:", type, "and genre:", genre);
-        const res = await axios.get(
-          `https://abhinav-kappa.vercel.app/api/lists${type ? "?type=" + type : ""}${
-            genre ? "&genre=" + genre : ""
-          }`,
-          {
-            headers: {
-              token:
-              "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-            },
-          }
-        );
-        console.log("Response data:", res.data);
-        setLists(res.data);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user && user.accessToken) {
+          console.log("Fetching lists with type:", type, "and genre:", genre);
+          const res = await axios.get(
+            `https://abhinav-kappa.vercel.app/api/lists${type ? "?type=" + type : ""}${
+              genre ? "&genre=" + genre : ""
+            }`,
+            {
+              headers: {
+                token: "Bearer " + user.accessToken,
+              },
+            }
+          );
+          console.log("Response data:", res.data);
+          setLists(res.data);
+        } else {
+          console.error("User is not logged in or accessToken is missing");
+        }
       } catch (err) {
         console.error("Error fetching lists:", err);
       }
