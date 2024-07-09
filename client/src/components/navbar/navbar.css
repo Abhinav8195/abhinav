@@ -106,7 +106,7 @@
   top: -100%; /* Initially hide above the screen */
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 70px); /* Adjust to show the menu below the navbar */
   background-color: var(--main-color);
   padding: 20px;
   transition: top 0.3s ease-in-out;
@@ -114,14 +114,14 @@
 }
 
 .side-menu.open {
-  top: 10px; /* Adjust to show the menu below the navbar */
+  top: 70px; /* Adjust to show the menu below the navbar */
 }
 
 .side-menu .close-icon {
   align-self: flex-end;
   font-size: 24px;
   cursor: pointer;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .side-menu .link,
