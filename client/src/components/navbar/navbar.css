@@ -103,22 +103,22 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 0;
-  left: -250px;
+  top: 70px;
+  right: -250px; /* Change left to right */
   width: 250px;
   height: 100%;
   background-color: var(--main-color);
   padding: 20px;
-  transition: left 0.3s ease-in-out;
+  transition: right 0.3s ease-in-out; /* Change left to right */
   z-index: 1000;
 }
 
 .side-menu.open {
-  left: 0;
+  right: 0; /* Change left to right */
 }
 
 .side-menu .close-icon {
-  
+  align-self: flex-end;
   font-size: 24px;
   cursor: pointer;
   margin-bottom: 20px;

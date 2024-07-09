@@ -26,7 +26,6 @@ const Navbar = () => {
     <div className={isScrolled ? "navbar scrolled" : "navbar"}>
       <div className="container">
         <div className="left">
-          <IoMenuOutline className="menu-icon" onClick={toggleMenu} />
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt="Netflix"
@@ -59,6 +58,7 @@ const Navbar = () => {
               <span>Design By Abhinav</span>
             </div>
           </div>
+          <IoMenuOutline className="menu-icon" onClick={toggleMenu} />
         </div>
       </div>
       <div className={`side-menu ${isMenuOpen ? "open" : ""}`}>
