@@ -5,27 +5,34 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
 export default function Featured({ type, setGenre }) {
   const [content, setContent] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
     const getrandomcontent = async () => {
-      try {
-        const res = await axios.get(`https://abhinav-kappa.vercel.app/api/movies/random?type=${type}`, {
-          headers: {
-            token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
-          },
-        });
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && user.accessToken) {
+        try {
+          const res = await axios.get(
+            `https://abhinav-kappa.vercel.app/api/movies/random?type=${type}`,
+            {
+              headers: {
+                token: "Bearer " + user.accessToken,
+              },
+            }
+          );
 
-        if (res.data.length > 0) {
-          setContent(res.data[0]);
-        } else {
-          console.log("No content found");
+          if (res.data.length > 0) {
+            setContent(res.data[0]);
+          } else {
+            console.log("No content found");
+          }
+        } catch (error) {
+          console.error("Error fetching random content:", error);
         }
-      } catch (error) {
-        console.error("Error fetching random content:", error);
+      } else {
+        console.error("User is not logged in or accessToken is missing");
       }
     };
 

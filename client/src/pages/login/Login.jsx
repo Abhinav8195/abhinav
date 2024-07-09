@@ -2,13 +2,14 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../authContext/AuthContext";
 import "./login.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const login = async (userCredentials, dispatch) => {
   dispatch({ type: "LOGIN_START" });
   try {
     const res = await axios.post("https://abhinav-kappa.vercel.app/api/auth/login", userCredentials);
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    localStorage.setItem("user", JSON.stringify(res.data));
   } catch (err) {
     dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
   }
@@ -19,11 +20,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await login({ email, password }, dispatch);
+      navigate("/"); // Redirect to home after successful login
     } catch (err) {
       setError(err.response?.data || "Something went wrong");
     }

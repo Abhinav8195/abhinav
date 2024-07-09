@@ -11,14 +11,12 @@ const Home = ({ type }) => {
 
   useEffect(() => {
     const getRandomLists = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user && user.accessToken) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && user.accessToken) {
+        try {
           console.log("Fetching lists with type:", type, "and genre:", genre);
           const res = await axios.get(
-            `https://abhinav-kappa.vercel.app/api/lists${type ? "?type=" + type : ""}${
-              genre ? "&genre=" + genre : ""
-            }`,
+            `https://abhinav-kappa.vercel.app/api/lists${type ? "?type=" + type : ""}${genre ? "&genre=" + genre : ""}`,
             {
               headers: {
                 token: "Bearer " + user.accessToken,
@@ -27,13 +25,14 @@ const Home = ({ type }) => {
           );
           console.log("Response data:", res.data);
           setLists(res.data);
-        } else {
-          console.error("User is not logged in or accessToken is missing");
+        } catch (err) {
+          console.error("Error fetching lists:", err);
         }
-      } catch (err) {
-        console.error("Error fetching lists:", err);
+      } else {
+        console.error("User is not logged in or accessToken is missing");
       }
     };
+
     getRandomLists();
   }, [type, genre]);
 
