@@ -1,5 +1,5 @@
 .navbar {
-  width: 100%;
+  width: 100vw; /* Ensure the navbar spans the full viewport width */
   color: white;
   font-size: 14px;
   position: fixed;
