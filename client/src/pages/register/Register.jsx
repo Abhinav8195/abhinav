@@ -27,7 +27,7 @@ export default function Register() {
     setUsername(usernameRef.current.value);
 
     try {
-      const response = await axios.post("/auth/register", { email, username, password });
+      const response = await axios.post("https://abhinav-kappa.vercel.app/api/auth/register", { email, username, password });
       setLoading(false);
       navigate("/login");
     } catch (err) {

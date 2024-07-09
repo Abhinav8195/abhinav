@@ -15,7 +15,7 @@ const Home = ({ type }) => {
       try {
         console.log("Fetching lists with type:", type, "and genre:", genre);
         const res = await axios.get(
-          `lists${type ? "?type=" + type : ""}${
+          `https://abhinav-kappa.vercel.app/api/lists${type ? "?type=" + type : ""}${
             genre ? "&genre=" + genre : ""
           }`,
           {
