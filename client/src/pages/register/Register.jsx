@@ -1,81 +1,80 @@
+import "./listItem.css";
+ import { IoMdAdd } from "react-icons/io";
+ import { FaPlay } from "react-icons/fa";
+ import { MdOutlineThumbUp } from "react-icons/md";
+ import { MdOutlineThumbDown } from "react-icons/md";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./register.css";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+export default function ListItem({ index, item }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [movie, setMovie] = useState({});
   const navigate = useNavigate();
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const usernameRef = useRef();
+  useEffect(() => {
+    const getMovie = async () => {
+      try {
+        const res = await axios.get("/movies/find/" + item, {
+          headers: {
+            token:
+            "Bearer "+JSON.parse(localStorage.getItem("user")).accessToken,
+          },
+        });
+        setMovie(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMovie();
+  }, [item]);
 
-  const handleStart = () => {
-    setEmail(emailRef.current.value);
-  };
-
-  const handleFinish = async (e) => {
-    e.preventDefault();
-    if (loading) return; // Prevent multiple submissions
-    setLoading(true);
-    setPassword(passwordRef.current.value);
-    setUsername(usernameRef.current.value);
-
-    try {
-      const response = await axios.post("https://abhinav-kappa.vercel.app/api/auth/register", { email, username, password });
-      setLoading(false);
-      navigate("/login");
-    } catch (err) {
-      setLoading(false);
-      setError(err.response?.data?.message || "Something went wrong");
-    }
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
+  const handleClick = () => {
+    navigate("/watch", { state: { movie: movie } });
   };
 
   return (
-    <div className="register">
-      <div className="top">
-        <div className="wrapper">
-          <img
-            className="logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-            alt=""
-          />
-          <button className="loginButton" onClick={handleLogin}>Sign In</button>
-        </div>
-      </div>
-      <div className="container">
-        <h1>Unlimited movies, TV shows, and more.</h1>
-        <h2>Watch anywhere. Cancel anytime.</h2>
-        <p>
-          Ready to watch? Enter your email to create or restart your membership.
-        </p>
-        {!email ? (
-          <div className="input">
-            <input type="email" placeholder="email address" ref={emailRef} />
-            <button className="registerButton" onClick={handleStart}>
-              Get Started
-            </button>
+    <div onClick={handleClick}>
+    <div
+      className="listItem"
+      style={{ center: isHovered && index * 225 - 50 + index * 2.5 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <img src={movie?.img} alt="" />
+      {isHovered && (
+        <>
+          <video src={movie?.trailer} autoPlay={true} loop />
+          <div className="itemInfo" style={{color:'white'}}>
+            <div className="icons">
+              <FaPlay className="icon" />
+              <IoMdAdd className="icon" />
+              <MdOutlineThumbUp className="icon" />
+              <MdOutlineThumbDown className="icon" />
+            </div>
+            <div className="itemInfoTop">
+              <span>{movie?.duration}</span>
+              <span className="limit">+{movie?.limit}</span>
+              <span>{movie?.year}</span>
+            </div>
+            <div className="desc">{movie?.desc}</div>
+            <div className="genre">{movie?.genre}</div>
           </div>
-        ) : (
-          <form className="input" onSubmit={handleFinish}>
-            <input type="text" placeholder="username" ref={usernameRef} />
-            <input type="password" placeholder="password" ref={passwordRef} />
-            <button className="registerButton" type="submit" disabled={loading}>
-              {loading ? "Loading..." : "Start"}
-            </button>
-          </form>
-        )}
-        {error && <div className="error">{error}</div>}
-      </div>
+        </>
+      )}
+     
+    </div>
     </div>
   );
 }
+
+
+// import { IoMdAdd } from "react-icons/io";
+// import { FaPlay } from "react-icons/fa";
+// import { MdOutlineThumbUp } from "react-icons/md";
+// import { MdOutlineThumbDown } from "react-icons/md";
+// <FaPlay className="icon" />
+// <IoMdAdd className="icon" />
+// <MdOutlineThumbUp className="icon" />
+// <MdOutlineThumbDown className="icon" />
