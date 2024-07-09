@@ -8,8 +8,9 @@ const userRoute = require("./routes/users");
 const movieRoute = require("./routes/movies");
 const listRoute = require("./routes/lists");
 
-dotenv.config();
 
+app.use(cors())
+dotenv.config();
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -20,10 +21,6 @@ mongoose
   .catch((err) => {
     console.error(err);
   });
-
- 
-  
-  app.use(cors());
 
 app.use(express.json());
 

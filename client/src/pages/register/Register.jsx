@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./register.css";
 
@@ -9,6 +8,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const emailRef = useRef();
@@ -21,19 +21,22 @@ export default function Register() {
 
   const handleFinish = async (e) => {
     e.preventDefault();
+    if (loading) return; // Prevent multiple submissions
+    setLoading(true);
     setPassword(passwordRef.current.value);
     setUsername(usernameRef.current.value);
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/register", { email, username, password });
+      const response = await axios.post("/auth/register", { email, username, password });
+      setLoading(false);
       navigate("/login");
     } catch (err) {
+      setLoading(false);
       setError(err.response?.data?.message || "Something went wrong");
     }
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = () => {
     navigate("/login");
   };
 
@@ -46,7 +49,7 @@ export default function Register() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
             alt=""
           />
-          <button className="loginButton" onClick={(e) => handleLogin(e)}>Sign In</button>
+          <button className="loginButton" onClick={handleLogin}>Sign In</button>
         </div>
       </div>
       <div className="container">
@@ -66,8 +69,8 @@ export default function Register() {
           <form className="input" onSubmit={handleFinish}>
             <input type="text" placeholder="username" ref={usernameRef} />
             <input type="password" placeholder="password" ref={passwordRef} />
-            <button className="registerButton" type="submit">
-              Start
+            <button className="registerButton" type="submit" disabled={loading}>
+              {loading ? "Loading..." : "Start"}
             </button>
           </form>
         )}

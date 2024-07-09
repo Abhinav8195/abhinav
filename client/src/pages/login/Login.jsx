@@ -1,18 +1,34 @@
+import axios from "axios";
 import { useContext, useState } from "react";
-import { login } from "../../authContext/apiCalls";
 import { AuthContext } from "../../authContext/AuthContext";
 import "./login.css";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
+const login = async (userCredentials, dispatch) => {
+  dispatch({ type: "LOGIN_START" });
+  try {
+    const res = await axios.post("/auth/login", userCredentials);
+    dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+  } catch (err) {
+    dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+  }
+};
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const { dispatch } = useContext(AuthContext);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    login({ email, password }, dispatch);
+    try {
+      await login({ email, password }, dispatch);
+    } catch (err) {
+      setError(err.response?.data || "Something went wrong");
+    }
   };
+
   return (
     <div className="login">
       <div className="top">
@@ -40,8 +56,9 @@ export default function Login() {
           <button className="loginButton" onClick={handleLogin}>
             Sign In
           </button>
+          {error && <div className="error">{error}</div>}
           <span>
-            New to Netflix?  <Link style={{ textDecoration: 'none' }} to={'/register'}><b>Sign up now.</b></Link>
+            New to Netflix? <Link style={{ textDecoration: 'none' }} to={'/register'}><b>Sign up now.</b></Link>
           </span>
           <small>
             This page is protected by Google reCAPTCHA to ensure you're not a
