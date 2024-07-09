@@ -114,14 +114,14 @@
 }
 
 .side-menu.open {
-  top: 70px; /* Adjust to show the menu below the navbar */
+  top: 10px; /* Adjust to show the menu below the navbar */
 }
 
 .side-menu .close-icon {
   align-self: flex-end;
   font-size: 24px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .side-menu .link,
