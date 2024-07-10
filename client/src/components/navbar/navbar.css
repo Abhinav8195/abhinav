@@ -64,10 +64,12 @@
   cursor: pointer;
 }
 
+
 .navbar .container .right .profile:hover .options {
   display: flex;
   flex-direction: column;
   position: absolute;
+  right: 0;
 }
 
 .menu-icon {
