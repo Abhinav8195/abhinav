@@ -11,7 +11,7 @@ import { logout } from "../../authContext/AuthActions";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { dispatch } = useContext(AuthContext);
+  const { user,dispatch } = useContext(AuthContext);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -44,7 +44,7 @@ const Navbar = () => {
         </div>
         <div className="right">
           <FaSearch className="icon" />
-          <span>KID</span>
+          <span>{user ? user.username : "Guest"}</span>
           <IoIosNotifications className="icon" />
           <img
             src="https://plus.unsplash.com/premium_photo-1669648870565-829ea58d7a05?q=80&w=1915&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
