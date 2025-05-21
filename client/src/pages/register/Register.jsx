@@ -17,9 +17,10 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await axios.post("https://abhinav-kappa.vercel.app/api/auth/register", { email, username, password });
+      const response = await axios.post("https://testnetflix-server.onrender.com/api/auth/register", { email, username, password });
       setLoading(false);
       navigate("/login");
+      console.log(response)
     } catch (err) {
       setLoading(false);
       setError(err.response?.data?.message || "Something went wrong");
