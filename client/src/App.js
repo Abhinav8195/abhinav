@@ -12,7 +12,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-      {/* <Route exact path="/register" element={!user ? <Register /> : <Home />} />
+      <Route exact path="/register" element={!user ? <Register /> : <Home />} />
       <Route exact path="/login" element={!user? <Login />: <Home />} />
       <Route exact path="/" element={user ? <Home /> : <Register />} />
       <Route exact path="*" element={<Home/>} />
@@ -23,13 +23,7 @@ const App = () => {
         <Route exact path="/watch" element={<Watch/>} />
         <Route exact path="*" element={<Home/>} />
         </>)
-        } */}
-
-         <Route exact path="/" element={<Home />} />
-          <Route exact path="/movies" element={<Home type="movies" />} />
-        <Route exact path="/series" element={<Home type="series" />} />
-        <Route exact path="/watch" element={<Watch/>} />
-        <Route exact path="*" element={<Home/>} />
+        }
 
        
       </Routes>
